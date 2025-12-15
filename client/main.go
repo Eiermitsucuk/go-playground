@@ -2,21 +2,22 @@ package main
 
 import (
 	"fmt"
-	"io"
+	"io/ioutil"
+	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
-	//targetURL := mylib.ServerURL
-	c := http.Client{Timeout: time.Duration(10) * time.Second}
-	resp, err := c.Get("https://www.google.com/")
+	resp, err := http.Get("http://localhost:8080/")
 	if err != nil {
-		fmt.Printf("Error %s", err)
-		return
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	fmt.Printf("Body : %s", body)
 
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(string(body))
 }

@@ -1,20 +1,15 @@
-package server
+package main
 
 import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 )
 
-const ServerPort = 8080
-const ServerURL = "http://localhost:8080/"
-
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	fmt.Fprintf(w, "Hello Client")
 }
-
 func main() {
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(strconv.Itoa(ServerPort), nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
